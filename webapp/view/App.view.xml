@@ -53,7 +53,14 @@
 							<IconTabFilter text="{i18n>dataBindingFilter}" key="db">
 								<content>
 									<!--сортировка по цене-->
-									<List headerText="{i18n>productListTitle}" items="{path: '/ProductSet', sorter: { path: 'Price'}}">
+									<List id="productsList" items="{path : '/ProductSet', sorter : { path : 'Category', group : true } }">
+										<headerToolbar>
+											<Toolbar>
+												<Title text="{i18n>productListTitle}"/>
+												<ToolbarSpacer/>
+												<SearchField width="50%" search="onFilterProducts"/>
+											</Toolbar>
+										</headerToolbar>
 										<items>
 											<ObjectListItem title="{Name}"
 												number="{parts: [ {path: 'Price'}, {path: 'CurrencyCode'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
