@@ -8,6 +8,14 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("opensap.myapp.controller.App", {
 		formatter: formatter,
+		onInit: function () {
+
+			this._NameSorter = new sap.ui.model.Sorter("Price", false);
+		},
+		onSortPrice: function () {
+			this._NameSorter.bDescending = !this._NameSorter.bDescending;
+			this.byId("productsList").getBinding("items").sort(this._NameSorter);
+		},
 		onShowHello: function () {
 			// read msg from i18n model
 			var oBundle = this.getView().getModel("i18n").getResourceBundle();
@@ -18,6 +26,18 @@ sap.ui.define([
 			MessageToast.show(sMsg);
 
 		},
+		onItemSelected: function (oEvent) {
+			var oSelectedItem = oEvent.getSource();
+			var oContext = oSelectedItem.getBindingContext();
+			var sPath = oContext.getPath();
+			var oProductDetailPanel = this.byId("productDetailsPanel");
+
+			oProductDetailPanel.bindElement({
+				path: sPath
+			});
+			this.byId("productDetailsPanel").setVisible(true);
+		},
+
 		onFilterProducts: function (oEvent) {
 
 			// build filter array
